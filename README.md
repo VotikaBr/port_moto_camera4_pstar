@@ -147,6 +147,7 @@ After copying files:
 | **SELinux denials** | Check `logcat` for sepolicy issues, may need custom rules |
 | **Missing blobs** | Ensure `proprietary/` folder is completely copied |
 | **Patch conflicts** | Use Method 1 (direct copy) instead of patches |
+| **Front/rear video with stabilization** | This is the only known limitation: recording with stabilization enabled can produce noise and a bluish tint |
 
 ### 📝 Build Statistics
 
@@ -338,6 +339,7 @@ Após copiar os arquivos:
 | **Build falha: erros Android.bp** | Execute `m android_bp_verify` e verifique sintaxe |
 | **App da câmera trava** | Verifique se todas as libs HAL estão presentes na partição vendor |
 | **Denials SELinux** | Verifique `logcat` para problemas de sepolicy, pode precisar regras customizadas |
+| **Gravação frontal/traseira com estabilização** | Este é o único ponto conhecido que não funciona: com a estabilização ativada, a gravação pode gerar chiado e cor azulada |
 | **Blobs faltando** | Garanta que a pasta `proprietary/` foi completamente copiada |
 | **Conflitos de patch** | Use Método 1 (cópia direta) ao invés de patches |
 
