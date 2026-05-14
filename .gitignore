@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.o
+*.so
+*.a
+*.lib
+
+# Backup files
+*.orig
+*.rej
+*.bak
+*~
+
+# Large binary files (> 100MB)
+# These should be obtained from:
+# 1. Extract from stock ROM
+# 2. Download from release page
+# 3. Build from source
+vendor/motorola/pstar/proprietary/product/priv-app/MotCamera3/MotCamera4.apk
+vendor/motorola/pstar/proprietary/product/app/MotCamera3AI/MotCamera3AI.apk
+vendor/motorola/pstar/proprietary/product/priv-app/MotoFaceUnlockArcSoft/lib/arm64/*.so
+
+# Large media files
+*.mkv
+*.mp4
+*.mov
+
+# LFS files (tracked separately)
+*.lfs
