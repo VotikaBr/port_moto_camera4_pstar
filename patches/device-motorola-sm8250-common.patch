@@ -1,0 +1,48 @@
+diff --git a/BoardConfigCommon.mk b/BoardConfigCommon.mk
+index fe8907fb..46644573 100644
+--- a/BoardConfigCommon.mk
++++ b/BoardConfigCommon.mk
+@@ -128,7 +128,7 @@ BOARD_USES_METADATA_PARTITION := true
+ # Partitions
+ BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
+ 
+--include vendor/lineage/config/BoardConfigReservedSize.mk
++-include vendor/infinity/config/BoardConfigReservedSize.mk
+ BOARD_BOOTIMAGE_PARTITION_SIZE := 0x06000000
+ BOARD_DTBOIMG_PARTITION_SIZE := 0x1800000
+ BOARD_ODMIMAGE_PARTITION_RESERVED_SIZE := 30720000
+diff --git a/common.mk b/common.mk
+index 6941b572..24c7076e 100644
+--- a/common.mk
++++ b/common.mk
+@@ -20,7 +20,7 @@ TARGET_SUPPORTS_OMX_SERVICE := false
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+ 
+ # Inherit some common Lineage stuff.
+-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
++$(call inherit-product, vendor/infinity/config/common_full_phone.mk)
+ 
+ PRODUCT_BRAND := motorola
+ PRODUCT_MANUFACTURER := motorola
+@@ -73,13 +73,14 @@ PRODUCT_PACKAGES += \
+     otapreopt_script
+ 
+ # Partitions
+-PRODUCT_PACKAGES += \
+-    vendor_bt_firmware_mountpoint \
+-    vendor_dsp_mountpoint \
+-    vendor_firmware_mnt_mountpoint \
+-    vendor_fsg_mountpoint \
+-    vendor_super_fsg_mountpoint \
+-    vendor_super_modem_mountpoint
++# Create mountpoint directories via marker files to avoid Ninja directory outputs.
++PRODUCT_COPY_FILES += \
++    $(LOCAL_PATH)/configs/mountpoint.placeholder:$(TARGET_COPY_OUT_VENDOR)/bt_firmware/.mountpoint \
++    $(LOCAL_PATH)/configs/mountpoint.placeholder:$(TARGET_COPY_OUT_VENDOR)/dsp/.mountpoint \
++    $(LOCAL_PATH)/configs/mountpoint.placeholder:$(TARGET_COPY_OUT_VENDOR)/firmware_mnt/.mountpoint \
++    $(LOCAL_PATH)/configs/mountpoint.placeholder:$(TARGET_COPY_OUT_VENDOR)/fsg/.mountpoint \
++    $(LOCAL_PATH)/configs/mountpoint.placeholder:$(TARGET_COPY_OUT_VENDOR)/super_fsg/.mountpoint \
++    $(LOCAL_PATH)/configs/mountpoint.placeholder:$(TARGET_COPY_OUT_VENDOR)/super_modem/.mountpoint
+ 
+ PRODUCT_USE_DYNAMIC_PARTITIONS := true
+ 

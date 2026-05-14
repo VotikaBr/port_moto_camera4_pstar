@@ -1,0 +1,28 @@
+diff --git a/sepolicy/qti/vendor/property.te b/sepolicy/qti/vendor/property.te
+index 9743359..c53b6ca 100644
+--- a/sepolicy/qti/vendor/property.te
++++ b/sepolicy/qti/vendor/property.te
+@@ -2,7 +2,9 @@
+ vendor_public_prop(moto_camera_config_prop)
+ 
+ vendor_internal_prop(vendor_mot_fingerprint_prop)
+-vendor_internal_prop(vendor_mot_hw_prop)
++# vendor_restricted_prop permite que coredomain (incluindo priv_app) LEIA as props,
++# mas mantem o neverallow de escrita para dominios fora de vendor/init.
++vendor_restricted_prop(vendor_mot_hw_prop)
+ vendor_internal_prop(vendor_mot_touch_prop)
+ 
+ # Secure Element
+diff --git a/sepolicy/qti/vendor/property_contexts b/sepolicy/qti/vendor/property_contexts
+index fb8f017..6360f2e 100644
+--- a/sepolicy/qti/vendor/property_contexts
++++ b/sepolicy/qti/vendor/property_contexts
+@@ -18,7 +18,7 @@ ro.vendor.hw.                             u:object_r:vendor_mot_hw_prop:s0
+ ro.vendor.manufacturedate                 u:object_r:vendor_mot_hw_prop:s0
+ ro.vendor.mot.cust_md5                    u:object_r:vendor_mot_hw_prop:s0
+ ro.vendor.mot.gki.                        u:object_r:vendor_mot_hw_prop:s0
+-ro.vendor.mot.hw.                         u:object_r:vendor_mot_hw_prop:s0
++ro.vendor.mot.hw.                         u:object_r:vendor_camera_prop:s0
+ ro.vendor.mot.iccid                       u:object_r:vendor_mot_hw_prop:s0
+ ro.vendor.product.device                  u:object_r:vendor_mot_hw_prop:s0
+ ro.vendor.product.display                 u:object_r:vendor_mot_hw_prop:s0

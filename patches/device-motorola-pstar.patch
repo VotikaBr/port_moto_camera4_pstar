@@ -1,0 +1,196 @@
+diff --git a/AndroidProducts.mk b/AndroidProducts.mk
+index cb5a9a5..bea0cd3 100644
+--- a/AndroidProducts.mk
++++ b/AndroidProducts.mk
+@@ -5,4 +5,4 @@
+ #
+ 
+ PRODUCT_MAKEFILES := \
+-    $(LOCAL_DIR)/lineage_pstar.mk
++    $(LOCAL_DIR)/infinity_pstar.mk
+diff --git a/BoardConfig.mk b/BoardConfig.mk
+index fb58d77..bfba8dc 100644
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -11,6 +11,9 @@ DEVICE_PATH := device/motorola/pstar
+ # Bootloader
+ TARGET_BOOTLOADER_BOARD_NAME := pstar
+ 
++# Allow proprietary ELF blobs copied through PRODUCT_COPY_FILES.
++BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
++
+ # Display
+ TARGET_SCREEN_DENSITY := 400
+ 
+diff --git a/device.mk b/device.mk
+index 26bc498..ebe48f9 100644
+--- a/device.mk
++++ b/device.mk
+@@ -26,6 +26,46 @@ PRODUCT_COPY_FILES += \
+ PRODUCT_PACKAGES += \
+     libgui_shim_vendor
+ 
++# Camera configuration files from HelloUI KSU pstar module
++PRODUCT_COPY_FILES += \
++    vendor/motorola/pstar/proprietary/vendor/etc/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_vendor.xml \
++    vendor/motorola/pstar/proprietary/vendor/etc/media_profiles_kona.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_kona.xml \
++    vendor/motorola/pstar/proprietary/vendor/etc/camera/vidhance_calibration:$(TARGET_COPY_OUT_VENDOR)/etc/camera/vidhance_calibration \
++    vendor/motorola/pstar/proprietary/vendor/etc/camera/vidhance_calibration_32:$(TARGET_COPY_OUT_VENDOR)/etc/camera/vidhance_calibration_32
++
++PRODUCT_SYSTEM_PROPERTIES += \
++    camera.disable_zsl_mode=1 \
++    init.svc.cameraserver=running \
++    init.svc.imgtuner-hal-1-0=running
++
++PRODUCT_PRODUCT_PROPERTIES += \
++    ro.camera.cfa.packagelist=com.motorola.coresettingsext,com.motorola.camera2,com.motorola.camera3,com.motorola.actions \
++    ro.com.google.lens.oem_camera_package=com.motorola.camera3 \
++    ro.product.motcameradesktop=1
++
++PRODUCT_VENDOR_PROPERTIES += \
++    persist.vendor.camera.expose.aux=1 \
++    persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.motorola.camera3 \
++    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.motorola.camera2,com.motorola.camera3,com.motorola.motocit \
++    vendor.camera.aux.packagelist2=com.motorola.ccc,com.android.settings \
++    vendor.vidhance.enabled=0 \
++    vendor.vidhance.preview.enabled=0 \
++    vendor.vidhance.video.enabled=0 \
++    persist.vendor.vidhance.enabled=0 \
++    persist.vendor.vidhance.preview.enabled=0 \
++    persist.vendor.vidhance.video.enabled=0 \
++    vendor.vidhance.video.usecallback=1 \
++    vendor.vidhance.video.increasedsize=0 \
++    vendor.vidhance.gyro.timestampbaseconversion=1 \
++    persist.vendor.vidhance.video.usecallback=1 \
++    persist.vendor.vidhance.video.increasedsize=0 \
++    persist.vendor.vidhance.gyro.timestampbaseconversion=1 \
++    persist.vendor.camera.eis.enable=0 \
++    persist.vendor.camera.eisv2.enable=0 \
++    persist.vendor.camera.eisv3.enable=0 \
++    persist.vendor.camera.vidhance.cameraId1.enable=0 \
++    persist.vendor.camera.vidhance.front.enable=0
++
+ # Init
+ PRODUCT_PACKAGES += \
+     init.device.rc
+@@ -43,3 +83,12 @@ PRODUCT_PACKAGES += \
+ 
+ # Get non-open-source specific aspects
+ $(call inherit-product, vendor/motorola/pstar/pstar-vendor.mk)
++
++# Maintainer Name
++INFINITY_MAINTAINER := VotikaBr
++
++# Whether the device supports Fingerprint On Display
++TARGET_HAS_UDFPS := false
++
++# Whether Including Google Apps
++WITH_GAPPS := true
+\ No newline at end of file
+diff --git a/lineage_pstar.mk b/lineage_pstar.mk
+deleted file mode 100644
+index b1cf348..0000000
+--- a/lineage_pstar.mk
++++ /dev/null
+@@ -1,20 +0,0 @@
+-#
+-# Copyright (C) 2022 The LineageOS Project
+-#
+-# SPDX-License-Identifier: Apache-2.0
+-#
+-
+-# Inherit from pstar device
+-$(call inherit-product, device/motorola/pstar/device.mk)
+-
+-# Device identifier. This must come after all inclusions.
+-PRODUCT_NAME := lineage_pstar
+-PRODUCT_DEVICE := pstar
+-PRODUCT_MODEL := motorola edge 20 pro
+-
+-# Build info
+-PRODUCT_BUILD_PROP_OVERRIDES += \
+-    BuildDesc="pstar_retail-user 13 T1RAS33.55-15-16-5 d9def9-6b8134 release-keys" \
+-    BuildFingerprint=motorola/pstar_retail/pstar:13/T1RAS33.55-15-16-5/d9def9-6b8134:user/release-keys \
+-    DeviceProduct=pstar_retail \
+-    SystemName=pstar_retail
+diff --git a/proprietary-files.txt b/proprietary-files.txt
+index 3914fda..ea38b5e 100644
+--- a/proprietary-files.txt
++++ b/proprietary-files.txt
+@@ -66,8 +66,18 @@ vendor/lib64/libvidhance_face_stabilizer.so
+ vendor/lib64/libvidhance_fbc.so
+ vendor/lib64/libvidhance_horizon_correction.so
+ vendor/lib64/libvidhance_stabilizer.so
++vendor/lib64/libvidhance_zoom_stabilization.so
+ vendor/lib64/vendor.qti.hardware.camera.postproc@1.0-service-impl.so
+ 
++vendor/lib/libvidhance.so
++vendor/lib/libvidhance_active_ois.so
++vendor/lib/libvidhance_dmbr.so
++vendor/lib/libvidhance_face_stabilizer.so
++vendor/lib/libvidhance_fbc.so
++vendor/lib/libvidhance_horizon_correction.so
++vendor/lib/libvidhance_stabilizer.so
++vendor/lib/libvidhance_zoom_stabilization.so
++
+ # Camera-components
+ vendor/lib64/camera/com.mot.eeprom.mot_gt24p64b_ov16a1q_eeprom.so
+ vendor/lib64/camera/com.mot.eeprom.mot_gt24p64e_ov32b_eeprom.so
+@@ -135,6 +145,9 @@ vendor/lib64/camera/components/com.qtistatic.stats.pdlib.so
+ vendor/lib64/camera/components/com.vidhance.node.ica.so
+ vendor/lib64/camera/components/com.vidhance.node.processing.so
+ vendor/lib64/camera/components/com.vidhance.stats.aec_dmbr.so
++vendor/lib/camera/components/com.vidhance.node.ica.so
++vendor/lib/camera/components/com.vidhance.node.processing.so
++vendor/lib/camera/components/com.vidhance.stats.aec_dmbr.so
+ vendor/lib64/com.qti.feature2.anchorsync.so
+ vendor/lib64/com.qti.feature2.demux.so
+ vendor/lib64/com.qti.feature2.frameselect.so
+@@ -159,6 +172,7 @@ vendor/etc/camera/dual_golden_tele.bin
+ vendor/etc/camera/dual_golden_wide.bin
+ vendor/etc/camera/mot_engine_config.bin
+ vendor/etc/camera/vidhance_calibration
++vendor/etc/camera/vidhance_calibration_32
+ 
+ # Camera (Firmware)
+ vendor/firmware/CAMERA_ICP.elf
+diff --git a/rootdir/etc/init.device.rc b/rootdir/etc/init.device.rc
+index 41c3c07..5e02d3e 100644
+--- a/rootdir/etc/init.device.rc
++++ b/rootdir/etc/init.device.rc
+@@ -8,3 +8,22 @@ on boot
+ # NFC
+    chown nfc nfc /dev/st21nfc
+    chmod 0660 /dev/st21nfc
++
++   # Camera compatibility defaults for MotoCamera port (avoid stale persist props).
++   setprop vendor.vidhance.enabled 0
++   setprop vendor.vidhance.preview.enabled 0
++   setprop vendor.vidhance.video.enabled 0
++   setprop vendor.vidhance.video.usecallback 1
++   setprop vendor.vidhance.video.increasedsize 0
++   setprop vendor.vidhance.gyro.timestampbaseconversion 1
++   setprop persist.vendor.vidhance.enabled 0
++   setprop persist.vendor.vidhance.preview.enabled 0
++   setprop persist.vendor.vidhance.video.enabled 0
++   setprop persist.vendor.vidhance.video.usecallback 1
++   setprop persist.vendor.vidhance.video.increasedsize 0
++   setprop persist.vendor.vidhance.gyro.timestampbaseconversion 1
++   setprop persist.vendor.camera.eis.enable 0
++   setprop persist.vendor.camera.eisv2.enable 0
++   setprop persist.vendor.camera.eisv3.enable 0
++   setprop persist.vendor.camera.vidhance.cameraId1.enable 0
++   setprop persist.vendor.camera.vidhance.front.enable 0
+diff --git a/vendor.prop b/vendor.prop
+index a6291f0..d75822f 100644
+--- a/vendor.prop
++++ b/vendor.prop
+@@ -1,2 +1,7 @@
+ # Bluetooth
+ bluetooth.device.default_name=edge 20 pro
++
++# Defintions
++ro.product.marketname=Motorola Edge 20 Pro
++ro.infinity.soc=Snapdragon 870 5G
++ro.infinity.camera=108MP + 16MP + 8MP
+\ No newline at end of file

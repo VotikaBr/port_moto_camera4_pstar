@@ -1,0 +1,7 @@
+# Bluetooth
+bluetooth.device.default_name=edge 20 pro
+
+# Defintions
+ro.product.marketname=Motorola Edge 20 Pro
+ro.infinity.soc=Snapdragon 870 5G
+ro.infinity.camera=108MP + 16MP + 8MP
