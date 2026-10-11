@@ -52,12 +52,12 @@ index 26bc498..ebe48f9 100644
 +    persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.motorola.camera3 \
 +    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.motorola.camera2,com.motorola.camera3,com.motorola.motocit \
 +    vendor.camera.aux.packagelist2=com.motorola.ccc,com.android.settings \
-+    vendor.vidhance.enabled=0 \
-+    vendor.vidhance.preview.enabled=0 \
-+    vendor.vidhance.video.enabled=0 \
-+    persist.vendor.vidhance.enabled=0 \
-+    persist.vendor.vidhance.preview.enabled=0 \
-+    persist.vendor.vidhance.video.enabled=0 \
++    vendor.vidhance.enabled=1 \
++    vendor.vidhance.preview.enabled=1 \
++    vendor.vidhance.video.enabled=1 \
++    persist.vendor.vidhance.enabled=1 \
++    persist.vendor.vidhance.preview.enabled=1 \
++    persist.vendor.vidhance.video.enabled=1 \
 +    vendor.vidhance.video.usecallback=1 \
 +    vendor.vidhance.video.increasedsize=0 \
 +    vendor.vidhance.gyro.timestampbaseconversion=1 \
@@ -67,8 +67,8 @@ index 26bc498..ebe48f9 100644
 +    persist.vendor.camera.eis.enable=0 \
 +    persist.vendor.camera.eisv2.enable=0 \
 +    persist.vendor.camera.eisv3.enable=0 \
-+    persist.vendor.camera.vidhance.cameraId1.enable=0 \
-+    persist.vendor.camera.vidhance.front.enable=0
++    persist.vendor.camera.vidhance.cameraId1.enable=1 \
++    persist.vendor.camera.vidhance.front.enable=1
 +
  # Init
  PRODUCT_PACKAGES += \
@@ -164,23 +164,23 @@ index 41c3c07..5e02d3e 100644
     chmod 0660 /dev/st21nfc
 +
 +   # Camera compatibility defaults for MotoCamera port (avoid stale persist props).
-+   setprop vendor.vidhance.enabled 0
-+   setprop vendor.vidhance.preview.enabled 0
-+   setprop vendor.vidhance.video.enabled 0
++   setprop vendor.vidhance.enabled 1
++   setprop vendor.vidhance.preview.enabled 1
++   setprop vendor.vidhance.video.enabled 1
 +   setprop vendor.vidhance.video.usecallback 1
 +   setprop vendor.vidhance.video.increasedsize 0
 +   setprop vendor.vidhance.gyro.timestampbaseconversion 1
-+   setprop persist.vendor.vidhance.enabled 0
-+   setprop persist.vendor.vidhance.preview.enabled 0
-+   setprop persist.vendor.vidhance.video.enabled 0
++   setprop persist.vendor.vidhance.enabled 1
++   setprop persist.vendor.vidhance.preview.enabled 1
++   setprop persist.vendor.vidhance.video.enabled 1
 +   setprop persist.vendor.vidhance.video.usecallback 1
 +   setprop persist.vendor.vidhance.video.increasedsize 0
 +   setprop persist.vendor.vidhance.gyro.timestampbaseconversion 1
 +   setprop persist.vendor.camera.eis.enable 0
 +   setprop persist.vendor.camera.eisv2.enable 0
 +   setprop persist.vendor.camera.eisv3.enable 0
-+   setprop persist.vendor.camera.vidhance.cameraId1.enable 0
-+   setprop persist.vendor.camera.vidhance.front.enable 0
++   setprop persist.vendor.camera.vidhance.cameraId1.enable 1
++   setprop persist.vendor.camera.vidhance.front.enable 1
 diff --git a/vendor.prop b/vendor.prop
 index a6291f0..d75822f 100644
 --- a/vendor.prop

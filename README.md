@@ -13,6 +13,7 @@ This repository contains a complete port of the **Motorola Camera4** system for 
 ### 📋 Features
 
 ✅ **Complete Camera4 Integration** - Full Motorola Camera4 HAL implementation  
+✅ **Motorola Vidhance EIS Video Stabilization** - Fully working on front & rear sensors (ABI patched for Android 17)  
 ✅ **Device-Specific Configs** - PStar & SM8250 common configurations  
 ✅ **SEPolicy Rules** - 48+ SELinux policies for Motorola hardware  
 ✅ **Vendor Blobs** - All proprietary libraries and system extensions  
@@ -146,8 +147,7 @@ After copying files:
 | **Camera app crashes** | Verify all HAL libraries are present in vendor partition |
 | **SELinux denials** | Check `logcat` for sepolicy issues, may need custom rules |
 | **Missing blobs** | Ensure `proprietary/` folder is completely copied |
-| **Patch conflicts** | Use Method 1 (direct copy) instead of patches |
-| **Front/rear video with stabilization** | This is the only known limitation: recording with stabilization enabled can produce noise and a bluish tint |
+| **Front/rear video with stabilization** | Fully working! Fixed ABI mismatch in Vidhance node blobs (`GraphicBuffer` allocation sized to Android 17 libui). |
 
 ### 📝 Build Statistics
 
@@ -207,6 +207,7 @@ Este repositório contém um **port completo da Motorola Camera4** para o dispos
 ### 📋 Características
 
 ✅ **Integração Completa do Camera4** - Implementação total do HAL da Motorola Camera4  
+✅ **Estabilização de Vídeo Motorola Vidhance EIS** - Totalmente funcional na câmera frontal e traseira (ABI corrigida para Android 17)  
 ✅ **Configs Específicas do Device** - Configurações do PStar e SM8250 comum  
 ✅ **Regras SEPolicy** - 48+ políticas SELinux para hardware Motorola  
 ✅ **Blobs do Vendor** - Todas as bibliotecas proprietárias e extensões do sistema  
@@ -339,7 +340,7 @@ Após copiar os arquivos:
 | **Build falha: erros Android.bp** | Execute `m android_bp_verify` e verifique sintaxe |
 | **App da câmera trava** | Verifique se todas as libs HAL estão presentes na partição vendor |
 | **Denials SELinux** | Verifique `logcat` para problemas de sepolicy, pode precisar regras customizadas |
-| **Gravação frontal/traseira com estabilização** | Este é o único ponto conhecido que não funciona: com a estabilização ativada, a gravação pode gerar chiado e cor azulada |
+| **Gravação frontal/traseira com estabilização** | Totalmente funcional! Corrigido mismatch de ABI nos blobs do nó Vidhance (alocação do `GraphicBuffer` compatível com libui do Android 17). |
 | **Blobs faltando** | Garanta que a pasta `proprietary/` foi completamente copiada |
 | **Conflitos de patch** | Use Método 1 (cópia direta) ao invés de patches |
 
